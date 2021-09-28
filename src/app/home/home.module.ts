@@ -3,14 +3,23 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { HomeComponent } from './home.component';
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { CountryService } from './services/country.service';
+import { HomeComponent } from './pages/home/home.component';
+import { CountryComponent } from './pages/country/country.component';
+
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: ':name',
+    component: CountryComponent
   }
 ];
 
@@ -22,6 +31,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [HomeComponent]
+  declarations: [HomeComponent, CountryComponent],
+  providers: []
 })
 export class HomeModule { }

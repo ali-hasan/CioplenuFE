@@ -1,0 +1,49 @@
+
+<mat-spinner *ngIf="loaderService.isLoading | async"></mat-spinner>
+
+<div *ngIf="!(loaderService.isLoading | async) && country.name !== ''">
+    <mat-card class="example-card">
+        <mat-card-title-group>
+            <mat-card-title>{{country.name}}</mat-card-title>
+            <mat-card-subtitle>{{country.continent}}</mat-card-subtitle>
+            <img mat-card-md-image src="{{country.href.flag}}">
+        </mat-card-title-group>
+        <mat-card-content>
+            <mat-list>
+                <mat-list-item><span class="mat-caption mat-small">Full name: </span>&nbsp;&nbsp; {{country.full_name}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Capital: </span>&nbsp;&nbsp; {{country.capital}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">ISO: </span>&nbsp;&nbsp; {{country.iso3}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Currency: </span>&nbsp;&nbsp; {{country.currency}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Continent: </span>&nbsp;&nbsp; {{country.continent}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Phone Code: </span>&nbsp;&nbsp; {{country.phone_code}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Description: </span>&nbsp;&nbsp; {{country.description}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Population: </span>&nbsp;&nbsp; {{country.population}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Size: </span>&nbsp;&nbsp; {{country.size}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Covid cases: </span>&nbsp;&nbsp; {{country.covid19.total_case}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Covid deaths: </span>&nbsp;&nbsp; {{country.covid19.total_deaths}}</mat-list-item>
+                <mat-divider></mat-divider>
+                <mat-list-item><span class="mat-caption">Last updated: </span>&nbsp;&nbsp; {{country.covid19.last_updated | date}}</mat-list-item>
+              </mat-list>
+        </mat-card-content>
+    </mat-card>
+</div>
+
+<div *ngIf="!(loaderService.isLoading | async) && country.name === ''">
+    <mat-card class="example-card">
+        <mat-card-title-group>
+            <mat-card-title>{{countryName}} is not a country &#9924;</mat-card-title>
+        </mat-card-title-group>
+    </mat-card>
+</div>
+
+<!-- <pre>{{country | json}}</pre> -->

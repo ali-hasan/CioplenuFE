@@ -14,21 +14,27 @@ import {
 import { AuthService } from './auth.service';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import { LoaderService } from './loader.service';
 
 
 
 @Injectable()
 export class AppHttpInterceptor implements HttpInterceptor {
 
+  private requests: HttpRequest<any>[] = [];
+
   constructor (
     private authService: AuthService,
+    private loaderService: LoaderService,
     private router: Router
   ) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.requests.push(request);
+    this.loaderService.isLoading.next(true);
     const authRequest = request.clone({
       setHeaders: {
-        Authorization: `jwt ${this.authService.getToken()}`
+        Authorization: `Bearer ${environment.api.apiKey}`
       },
       url: `${environment.api.rooturl}/${request.url}`
     });
@@ -37,23 +43,28 @@ export class AppHttpInterceptor implements HttpInterceptor {
     .pipe(
       tap(event => {
         if (event instanceof HttpResponse) {
-          // console.log(' all looks good');
-          // http response status code
-          // console.log(event.status);
+          // console.log(' all good :)');
+          this.removeRequest(request);
           return event;
         }
         return event;
       }, error => {
        // http response status code
         if (error instanceof HttpErrorResponse) {
-          // use userService to handel user login and logout
-          // const userService = this.injector.get(UserService);
           if (error.status > 400 && error.status < 500) {
             console.error('Error status code:', error);
-            // userService.logout();
           }
+          this.removeRequest(request);
         }
       })
     );
+  }
+
+  removeRequest(req: HttpRequest<any>) {
+    const i = this.requests.indexOf(req);
+    if (i >= 0) {
+      this.requests.splice(i, 1);
+    }
+    this.loaderService.isLoading.next(this.requests.length > 0);
   }
 }

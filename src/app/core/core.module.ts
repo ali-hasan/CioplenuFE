@@ -3,10 +3,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { AuthService } from './auth.service';
-import { HomeService } from './home.service';
 
 import { AppHttpInterceptor } from './app.http.interceptor';
 import { throwIfAlreadyLoaded } from './module-import-guard';
+import { LoaderService } from './loader.service';
 
 
 @NgModule({
@@ -21,8 +21,7 @@ import { throwIfAlreadyLoaded } from './module-import-guard';
       useClass: AppHttpInterceptor,
       multi: true
     },
-    AuthService,
-    HomeService
+    AuthService, LoaderService
   ]
 })
 export class CoreModule {

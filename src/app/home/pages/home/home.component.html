@@ -1,0 +1,55 @@
+
+<mat-spinner *ngIf="loaderService.isLoading | async"></mat-spinner>
+
+<div class="main-content" [hidden]="data.length === 0">
+  <div fxLayout fxLayoutAlign="center center">
+    <mat-form-field fxFlex="40%">
+      <input [(ngModel)]="nameInputModel" matInput type="text" (keyup)="filterByName($any($event.target).value)" placeholder="Filter names">
+    </mat-form-field> &nbsp;
+    <mat-form-field fxFlex="40%">
+      <input [(ngModel)]="regionInputModel" matInput type="text" (keyup)="filterByRegion($any($event.target).value)" placeholder="Filter continent">
+    </mat-form-field>
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"  matSort matSortStart="asc">
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="continent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Continent </th>
+      <td mat-cell *matCellDef="let element"> {{element.continent}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="capital">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Capital </th>
+      <td mat-cell *matCellDef="let element"> {{element.capital}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="population">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Population </th>
+      <td mat-cell *matCellDef="let element"> {{element.population}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="size">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Size </th>
+      <td mat-cell *matCellDef="let element"> {{element.size}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency </th>
+      <td mat-cell *matCellDef="let element"> {{element.currency}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="phone_code">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone Code </th>
+      <td mat-cell *matCellDef="let element"> {{element.phone_code}} </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onRowClick(row)"></tr>
+  </table>
+  <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 50]" data-cy="tablePaginator"> </mat-paginator>
+</div>
+
+<!-- <pre>{{countries$ | async | json }}</pre> -->

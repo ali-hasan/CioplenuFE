@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   api: {
-    rooturl: 'http://localhost/api'
+    rooturl: 'https://restfulcountries.com/api/v1',
+    apiKey: '169|Md8Rm0eHZLDt90JsJimrUh6o3qE4SsE4s16hJCW6'
   }
 };
