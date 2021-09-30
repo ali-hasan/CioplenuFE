@@ -65,9 +65,9 @@ export class HomeComponent implements OnInit {
       this.filter$.subscribe(filter => {
         
         if (filter.regionFilter !== '')
-          res = this.data.filter((element: CountryModel) => element.continent.toLowerCase().includes(filter.regionFilter));
+          res = this.data.filter((element: CountryModel) => !!element.continent ? element.continent.toLowerCase().includes(filter.regionFilter) : null);
         if (filter.nameFilter !== '')
-          res = this.data.filter((element: CountryModel) => element.name.toLowerCase().includes(filter.nameFilter));
+          res = this.data.filter((element: CountryModel) => !!element.name ? element.name.toLowerCase().includes(filter.nameFilter) : null);
         
         
         if (filter.nameFilter === '' && filter.regionFilter === '')
