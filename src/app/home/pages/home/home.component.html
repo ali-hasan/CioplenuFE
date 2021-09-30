@@ -1,5 +1,5 @@
 
-<mat-spinner *ngIf="loaderService.isLoading | async"></mat-spinner>
+<mat-spinner *ngIf="(loaderService.isLoading | async) && data.length === 0"></mat-spinner>
 
 <div class="main-content" [hidden]="data.length === 0">
   <div fxLayout fxLayoutAlign="center center">

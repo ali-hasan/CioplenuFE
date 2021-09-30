@@ -7,10 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-// import { regionFilterStored, invokeCountriesAPI, filterDataStored } from '../../../../store/country.action';
-// import { countriesList } from '../../../../store/countries.selector';
-// import { filters } from '../../../../store/selectors/filter.selector';
 import { CountryModel } from 'src/app/home/model/country.model';
 import { AppState, FilterModel } from 'src/app/store/app.state';
 import { countriesList } from 'src/app/store/selectors/countries.selector';
@@ -52,7 +48,6 @@ export class HomeComponent implements OnInit {
   nameInputModel: string = '';
   regionInputModel: string = '';
 
-  // { country: CountryModel[] }
   constructor(
     private store: Store<AppState>, private route: Router, public loaderService: LoaderService) {
     this.countries$ = this.store.pipe(select(countriesList('')));
@@ -64,12 +59,11 @@ export class HomeComponent implements OnInit {
       this.data = res;
       this.filter$.subscribe(filter => {
         
-        if (filter.regionFilter !== '')
+        if (!!filter.regionFilter)
           res = this.data.filter((element: CountryModel) => !!element.continent ? element.continent.toLowerCase().includes(filter.regionFilter) : null);
-        if (filter.nameFilter !== '')
+        if (!!filter.nameFilter)
           res = this.data.filter((element: CountryModel) => !!element.name ? element.name.toLowerCase().includes(filter.nameFilter) : null);
-        
-        
+                
         if (filter.nameFilter === '' && filter.regionFilter === '')
           res = this.data;
 
